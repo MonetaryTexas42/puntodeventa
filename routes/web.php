@@ -1,24 +1,34 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| Aquí registras las rutas web de tu aplicación. Cargadas
+| por RouteServiceProvider dentro del grupo "web".
 |
 */
 
+// Ruta pública de bienvenida
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Todas estas rutas requieren estar autenticado
+Route::middleware(['auth'])->group(function () {
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
+    // CRUD de productos
+    Route::resource('products', ProductController::class);
+});
+
+// Rutas de autenticación (login, register, etc.)
 require __DIR__.'/auth.php';
+
