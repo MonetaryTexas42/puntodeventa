@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +14,9 @@ use App\Http\Controllers\ProductController;
 | por RouteServiceProvider dentro del grupo "web".
 |
 */
+Route::post('/sales', [SaleController::class, 'store'])
+     ->name('sales.store')
+     ->middleware('auth');
 
 // Ruta pública de bienvenida
 Route::get('/', function () {
